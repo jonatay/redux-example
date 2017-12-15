@@ -1,10 +1,11 @@
+// import { v4 } from 'node-uuid';
+const uuidv4 = require('uuid/v4');
 /*
   Actions
 */
-let nextTodoId = 0;
 export const addTodo = text => ({
   type: 'ADD_TODO',
-  id: nextTodoId++,
+  id: uuidv4(),
   text: text
 });
 export const setVisibilityFilter = filter => ({

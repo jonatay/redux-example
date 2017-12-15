@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setVisibilityFilter } from './actions';
+import { setVisibilityFilter } from '../actions/';
 
 // ********** Link Display
 const Link = ({ active, children, onClick }) => {

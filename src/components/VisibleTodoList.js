@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { toggleTodo } from './actions';
+import { toggleTodo } from '../actions/';
 
 const Todo = ({ onClick, completed, text }) => (
   <li
