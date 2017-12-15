@@ -1,19 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Provider } from 'react-redux';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom'
+import React from "react";
+import PropTypes from "prop-types";
+import { Provider } from "react-redux";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import App from './App';
+import App from "./App";
 
 const Root = ({ store }) => {
   return (
     <Provider store={store}>
       <Router>
-        <Route path="/" component={App} />
+        <div>
+          <Route path="/:filter?" component={App} />
+        </div>
       </Router>
     </Provider>
   );
