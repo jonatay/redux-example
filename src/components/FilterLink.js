@@ -1,22 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom'
 
 const FilterLink = ({ filter, children }) => (
-  <Link
-    to={filter === 'all' ? '' : filter}
+  <NavLink exact
+    to={'/' + (filter === 'all' ? '' : filter)}
+    label={filter}
     activeStyle={{
       textDecoration: 'none',
-      color: 'black'
+      color: 'black',
     }}
   >
     {children}
-  </Link>
+  </NavLink>
 );
 
 FilterLink.propTypes = {
   filter: PropTypes.oneOf(['all', 'completed', 'active']).isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export default FilterLink;
