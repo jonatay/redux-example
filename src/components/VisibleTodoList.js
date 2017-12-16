@@ -1,32 +1,55 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-import { toggleTodo } from "../actions/";
+// Before: import { toggleTodo, receiveTodos } from '../actions'
+import * as actions from '../actions'; // After
 
-import TodoList from "./TodoList";
+import { getVisibleTodos } from '../reducers/';
 
-const getVisibleTodos = (todos, filter) => {
-  switch (filter) {
-    case "all":
-      return todos;
-    case "completed":
-      return todos.filter(t => t.completed);
-    case "active":
-      return todos.filter(t => !t.completed);
-    default:
-      throw new Error(`Unknown filter: ${filter}.`);
+import TodoList from './TodoList';
+
+import { fetchTodos } from '../api';
+
+class VisibleTodoList extends Component {
+  componentDidMount() {
+    this.fetchData();
   }
-};
+  componentDidUpdate(prevProps) {
+    if (this.props.filter !== prevProps.filter) {
+      this.fetchData();
+    }
+  }
+  fetchData() {
+    const { filter, receiveTodos } = this.props;
+    fetchTodos(filter).then(todos => receiveTodos(filter, todos));
+  }
+  render() {
+    return <TodoList {...this.props} />;
+  }
+}
 
 // ********** VisibleTodoList Container
-const mapStateToProps = (state, ownProps) => ({
-  todos: getVisibleTodos(state.todos, ownProps.filter)
-});
-const mapDispatchToProps = dispatch => ({
-  onTodoClick(id) {
-    dispatch(toggleTodo(id));
-  }
-});
-const VisibleTodoList = connect(mapStateToProps, mapDispatchToProps)(TodoList);
+const mapStateToProps = (state, { match }) => {
+  const filter = match.params.filter || 'all';
+  return {
+    todos: getVisibleTodos(state, filter),
+    filter
+  };
+};
+
+// const mapDispatchToProps = dispatch => ({
+//   onTodoClick(id) {
+//     dispatch(toggleTodo(id));
+//   }
+// });
+
+VisibleTodoList = withRouter(
+  connect(
+    mapStateToProps,
+    // before { onTodoClick: toggleTodo, receiveTodos })
+    actions //After
+  )(VisibleTodoList)
+);
 
 export default VisibleTodoList;
