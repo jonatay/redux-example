@@ -1,42 +1,26 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { toggleTodo } from '../actions/';
+import React from "react";
+import { connect } from "react-redux";
 
-const Todo = ({ onClick, completed, text }) => (
-  <li
-    onClick={onClick}
-    style={{
-      textDecoration: completed ? 'line-through' : 'none',
-      cursor: 'pointer'
-    }}>
-    {text}
-  </li>
-);
+import { toggleTodo } from "../actions/";
 
-const TodoList = ({ todos, onTodoClick }) => (
-  <ul>
-    {todos.map(todo => (
-      <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
-    ))}
-  </ul>
-);
+import TodoList from "./TodoList";
 
 const getVisibleTodos = (todos, filter) => {
   switch (filter) {
-    case 'SHOW_ALL':
+    case "all":
       return todos;
-    case 'SHOW_COMPLETE':
+    case "completed":
       return todos.filter(t => t.completed);
-    case 'SHOW_ACTIVE':
+    case "active":
       return todos.filter(t => !t.completed);
     default:
-      return todos;
+      throw new Error(`Unknown filter: ${filter}.`);
   }
 };
 
 // ********** VisibleTodoList Container
-const mapStateToProps = state => ({
-  todos: getVisibleTodos(state.todos, state.visibilityFilter)
+const mapStateToProps = (state, ownProps) => ({
+  todos: getVisibleTodos(state.todos, ownProps.filter)
 });
 const mapDispatchToProps = dispatch => ({
   onTodoClick(id) {
