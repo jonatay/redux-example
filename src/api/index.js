@@ -18,6 +18,36 @@ const fakeDatabase = {
       id: uuidv4(),
       text: 'let’s go',
       completed: false
+    },
+    {
+      id: uuidv4(),
+      text: 'eggHead Redux Course 23',
+      completed: true
+    },
+    {
+      id: uuidv4(),
+      text: 'eggHead Redux Course 24',
+      completed: false
+    },
+    {
+      id: uuidv4(),
+      text: 'eggHead Redux Course 25',
+      completed: false
+    },
+    {
+      id: uuidv4(),
+      text: 'eggHead Redux Course 26',
+      completed: false
+    },
+    {
+      id: uuidv4(),
+      text: 'eggHead Redux Course 27',
+      completed: false
+    },
+    {
+      id: uuidv4(),
+      text: 'eggHead Redux Course aaagh',
+      completed: false
     }
   ]
 };
@@ -26,6 +56,9 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 export const fetchTodos = filter =>
   delay(500).then(() => {
+    // if (Math.random() > 0.5) {
+    //   throw new Error('Boom!');
+    // }
     switch (filter) {
       case 'all':
         return fakeDatabase.todos;
