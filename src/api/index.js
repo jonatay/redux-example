@@ -41,7 +41,7 @@ export const fetchTodos = filter =>
 export const addTodo = text =>
   delay(500).then(() => {
     const todo = {
-      id: v4(),
+      id: uuidv4(),
       text,
       completed: false
     };
