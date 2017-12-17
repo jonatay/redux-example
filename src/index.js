@@ -1,18 +1,8 @@
-const createList = filter => {
-  // eslint-disable-line arrow-body-style
-  return (state = [], action) => {
-    if (action.filter !== filter) {
-      return state;
-    }
-    switch (action.type) {
-      case 'RECEIVE_TODOS':
-        return action.response.map(todo => todo.id);
-      default:
-        return state;
-    }
-  };
-};
+import 'babel-polyfill';
+import React from 'react';
+import { render } from 'react-dom';
+import Root from './components/Root';
+import configureStore from './utils/configureStore';
 
-export default createList;
-
-export const getIds = state => state;
+const store = configureStore();
+render(<Root store={store} />, document.getElementById('root'));
